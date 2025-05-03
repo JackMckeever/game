@@ -91,8 +91,11 @@
         selectedCharacter = new Image();
         selectedCharacter.src = char.src;
         menu.style.display = 'none';
-        startGame();
+       function startGame() {
+         requestAnimationFrame(gameLoop);
       };
+
+        startGame();
       menu.appendChild(div);
     });
 
