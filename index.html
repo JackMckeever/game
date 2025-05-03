@@ -91,7 +91,33 @@
   selectedCharacter = new Image();
   selectedCharacter.src = char.src;
   menu.style.display = 'none';
-  startGame(); // This now correctly starts the game
+  function startGame() {
+  state.current = state.game; // <<< ADD THIS LINE
+
+  document.addEventListener("keydown", function(e) {
+    if (e.code === "Space") {
+      if (state.current === state.getReady) {
+        state.current = state.game;
+      } else if (state.current === state.game) {
+        bird.flap();
+      } else if (state.current === state.over) {
+        resetGame();
+      }
+    }
+  });
+
+  canvas.addEventListener("touchstart", function() {
+    if (state.current === state.getReady) {
+      state.current = state.game;
+    } else if (state.current === state.game) {
+      bird.flap();
+    } else if (state.current === state.over) {
+      resetGame();
+    }
+  });
+
+  loop();
+}      startGame(); // This now correctly starts the game
 };
       menu.appendChild(div);
     });
