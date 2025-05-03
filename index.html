@@ -87,40 +87,15 @@
       const div = document.createElement('div');
       div.className = 'character';
       div.innerHTML = `<img src="${char.src}" /><div>${char.name}</div>`;
-    div.onclick = () => {
-  selectedCharacter = new Image();
-  selectedCharacter.src = char.src;
-  menu.style.display = 'none';
-  function startGame() {
-  state.current = state.game; // <<< ADD THIS LINE
-
-  document.addEventListener("keydown", function(e) {
-    if (e.code === "Space") {
-      if (state.current === state.getReady) {
-        state.current = state.game;
-      } else if (state.current === state.game) {
-        bird.flap();
-      } else if (state.current === state.over) {
-        resetGame();
-      }
-    }
-  });
-
-  canvas.addEventListener("touchstart", function() {
-    if (state.current === state.getReady) {
-      state.current = state.game;
-    } else if (state.current === state.game) {
-      bird.flap();
-    } else if (state.current === state.over) {
-      resetGame();
-    }
-  });
-
-  loop();
-}      startGame(); // This now correctly starts the game
-};
+      div.onclick = () => {
+        selectedCharacter = new Image();
+        selectedCharacter.src = char.src;
+        menu.style.display = 'none';
+        startGame(); // Start the game once the character is selected
+      };
       menu.appendChild(div);
     });
+
     const bird = {
       x: 50,
       y: 150,
@@ -232,6 +207,8 @@
     };
 
     function startGame() {
+      state.current = state.getReady;
+
       document.addEventListener("keydown", function(e) {
         if (e.code === "Space") {
           if (state.current === state.getReady) {
